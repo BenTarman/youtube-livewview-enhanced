@@ -1,0 +1,21 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["airbnb"],
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "semi": [1, "never"],
+    "no-plusplus": "off",
+    "func-names": "off",
+    "max-len": [1, { "code": 120, "comments": 150, "tabWidth": 4, "ignoreUrls": true }],
+    "vars-on-top": "off",
+    "no-empty": "off",
+    "implicit-arrow-linebreak": "off",
+    "arrow-parens": [1, "as-needed"],
+    "function-paren-newline": "off",
+    "comma-dangle": [1, "never"],
+    "no-unused-vars": [1, { "args": "after-used", "argsIgnorePattern": "^_" }]
+  }
+}
