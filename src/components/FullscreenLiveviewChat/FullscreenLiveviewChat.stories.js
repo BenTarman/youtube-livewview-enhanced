@@ -16,7 +16,7 @@ const Img = styled.img`
 
 export default {
   title: 'FullscreenLiveviewChat',
-  component: FullscreenLiveviewChat,
+  component: FullscreenLiveviewChat
 }
 
 // Putting random haachama stream in background as picture to help better simulate the ui.

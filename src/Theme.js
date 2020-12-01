@@ -7,20 +7,20 @@ const theme = {
     powderWhite: '#FFFDF9',
     persianGreen: '#06B49A',
     lightBlue: '#AFDBD2',
-    onyx: '#36313D',
+    onyx: '#36313D'
   },
   fonts: ['sans-serif', 'Roboto'],
   fontSizes: {
     small: '1em',
     medium: '2em',
-    large: '3em',
-  },
+    large: '3em'
+  }
 }
 
 const Theme = ({ children }) => <ThemeProvider theme={theme}>{children}</ThemeProvider>
 
 Theme.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default Theme

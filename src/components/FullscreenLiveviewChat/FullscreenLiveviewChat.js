@@ -1,25 +1,31 @@
 import React from 'react'
-import styled from 'styled-components'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import ChatList from '../ChatList/ChatList'
+import DropOverlay from '../DropOverlay/DropOverlay'
+import {
+  TOP_RIGHT_DROP_SOURCE,
+  TOP_LEFT_DROP_SOURCE,
+  BOTTOM_LEFT_DROP_SOURCE,
+  BOTTOM_RIGHT_DROP_SOURCE,
+  LEFT_SIDE_DROP_SOURCE
+} from '../../utils/Constants'
 
-const OverlayContainer = styled.div`
-  height: 200px;
-  width: 200px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  background-color: rgba(
-    ${props => props.theme.fullscreen.overlayColor.r},
-    ${props => props.theme.fullscreen.overlayColor.g},
-    ${props => props.theme.fullscreen.overlayColor.b},
-    ${props => props.theme.fullscreen.opacity}
-  );
-`
+// NEED TO USE DROP TARGET NESTING HERE ....
 const FullscreenLiveViewChat = () => {
   return (
-    <OverlayContainer>
-      <ChatList />
-    </OverlayContainer>
+    <DndProvider backend={HTML5Backend}>
+      <DropOverlay position={TOP_RIGHT_DROP_SOURCE}>
+        <ChatList />
+      </DropOverlay>
+
+      <DropOverlay position={LEFT_SIDE_DROP_SOURCE} isSidePanel={true}>
+        <DropOverlay position={TOP_LEFT_DROP_SOURCE} />
+        <DropOverlay position={BOTTOM_LEFT_DROP_SOURCE} />
+      </DropOverlay>
+
+      <DropOverlay position={BOTTOM_RIGHT_DROP_SOURCE} />
+    </DndProvider>
   )
 }
 

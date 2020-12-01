@@ -18,6 +18,7 @@
     "comma-dangle": [1, "never"],
     "no-unused-vars": [1, { "args": "after-used", "argsIgnorePattern": "^_" }],
     "arrow-body-style": "off",
-    "react/jsx-boolean-value": "off"
+    "react/jsx-boolean-value": "off",
+    "no-confusing-arrow": "off"
   }
 }

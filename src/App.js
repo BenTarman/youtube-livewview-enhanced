@@ -1,11 +1,11 @@
 import React from 'react'
-import styled, { ThemeProvider } from 'styled-components'
+import { ThemeProvider } from 'styled-components'
 import FullscreenLiveViewChat from './components/FullscreenLiveviewChat/FullscreenLiveviewChat'
 
 const theme = {
   fullscreen: {
-    opacity: '0.5',
-  },
+    opacity: '0.5'
+  }
 }
 const App = () => {
   return (
