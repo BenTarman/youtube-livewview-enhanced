@@ -1,15 +1,18 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
+import FullscreenLiveViewChat from './components/FullscreenLiveviewChat/FullscreenLiveviewChat'
 
-const Test = styled.div`
-  height: 200px;
-  width: 200px;
-  background-color: green;
-  position: absolute;
-`
+const theme = {
+  fullscreen: {
+    opacity: '0.5',
+  },
+}
 const App = () => {
-  console.log('memes')
-  return <Test>lol</Test>
+  return (
+    <ThemeProvider theme={theme}>
+      <FullscreenLiveViewChat />
+    </ThemeProvider>
+  )
 }
 
 export default App
