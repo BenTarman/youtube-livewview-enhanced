@@ -19,6 +19,9 @@
     "no-unused-vars": [1, { "args": "after-used", "argsIgnorePattern": "^_" }],
     "arrow-body-style": "off",
     "react/jsx-boolean-value": "off",
-    "no-confusing-arrow": "off"
+    "no-confusing-arrow": "off",
+    "no-debugger": "warn",
+    "no-use-before-define": "off",
+    "object-curly-newline": "off"
   }
 }

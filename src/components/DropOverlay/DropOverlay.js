@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
+import { useDrop } from 'react-dnd'
 import {
   BOTTOM_RIGHT_DROP_SOURCE,
   TOP_RIGHT_DROP_SOURCE,
@@ -37,7 +38,7 @@ const OverlayContainer = styled.div`
         `}
 
   background-color: rgba(
-    ${props => props.theme.fullscreen.overlayColor.r},
+    ${props => (props.isOverCurrent ? props.theme.fullscreen.overlayColor.r : 200)},
     ${props => props.theme.fullscreen.overlayColor.g},
     ${props => (props.isSidePanel ? props.theme.fullscreen.overlayColor.b : 0)},
     ${props => props.theme.fullscreen.opacity}
@@ -46,8 +47,30 @@ const OverlayContainer = styled.div`
 /* eslint-enable indent */
 
 const DropOverlay = ({ position, isSidePanel, children }) => {
+  const [hasDropped, setHasDropped] = useState(false)
+
+  const [{ isOver, isOverCurrent }, drop] = useDrop({
+    accept: 'chat-list',
+    drop(item, monitor) {
+      const didDrop = monitor.didDrop()
+      if (didDrop) {
+        return
+      }
+      setHasDropped(true)
+    },
+    collect: monitor => {
+      return {
+        isOver: monitor.isOver(),
+        isOverCurrent: monitor.isOver({ shallow: true })
+      }
+    }
+  })
+
+  console.log(isOver)
   return (
-    <OverlayContainer position={position} isSidePanel={isSidePanel}>
+    <OverlayContainer position={position} isSidePanel={isSidePanel} isOverCurrent={isOverCurrent}>
+      {hasDropped && 'lol'}
+
       {children}
     </OverlayContainer>
   )
