@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import ChatList from '../ChatList/ChatList'
 
 const Box = styled.div`
   height: 200px;
@@ -8,7 +9,12 @@ const Box = styled.div`
 `
 
 const Chatbox = () => {
-  return <Box>test test test test test test </Box>
+  debugger
+  return (
+    <Box>
+      <ChatList />
+    </Box>
+  )
 }
 
 export default Chatbox

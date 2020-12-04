@@ -22,6 +22,7 @@
     "no-confusing-arrow": "off",
     "no-debugger": "warn",
     "no-use-before-define": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "no-loop-func": "off"
   }
 }

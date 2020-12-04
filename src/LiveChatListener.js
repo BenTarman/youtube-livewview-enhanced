@@ -1,6 +1,8 @@
 // Mutation observer that will observe for new live chats.
 // When a newly added live chat is detected a runtime message will be sent on the extension bus for the app to then catch.
 
+import parseLivechatAndCommitToStore from './utils/liveChatParser'
+
 const listenToLiveChat = () => {
   const observeLiveChatMessages = liveChatIframe => {
     const liveChatContainer = liveChatIframe.contentDocument
@@ -17,8 +19,7 @@ const listenToLiveChat = () => {
 
           // If newly added node is a live chat fire live chat event to browser runtime.
           if (liveChatNodeAdded) {
-            console.log('DETECTED A LIVE CHAT')
-            console.log(addednode)
+            parseLivechatAndCommitToStore(addednode)
           }
 
           // If newly added node is a super chat fire super chat event to browser runtime.
