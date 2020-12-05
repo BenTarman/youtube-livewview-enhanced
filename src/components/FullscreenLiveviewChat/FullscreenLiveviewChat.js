@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react'
 import { DndProvider, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import styled from 'styled-components'
-
+import { useDispatch } from 'react-redux'
 import DragLayer from '../DragLayer/DragLayer'
 import ChatList from '../ChatList/ChatList'
 import DraggableBox from '../DraggableBox/DraggableBox'
@@ -28,9 +28,10 @@ const Container = styled.div`
   with youtube player with no problems */
   pointer-events: ${props => (props.canDrop ? 'auto' : 'none')};
 `
+
 const ResizableBox = styled.div`
-  resize: both;
-  overflow: auto;
+  height: 200px;
+  width: 200px;
 `
 
 // NEED TO USE DROP TARGET NESTING HERE ....
@@ -43,7 +44,6 @@ const FullscreenLiveViewChat = () => {
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: 'chat-box',
     drop(item, monitor) {
-      debugger
       const delta = monitor.getDifferenceFromInitialOffset()
       const left = Math.round(item.left + delta.x)
       const top = Math.round(item.top + delta.y)
@@ -67,17 +67,17 @@ const FullscreenLiveViewChat = () => {
 
   return (
     <>
-      <DragLayer />
       <Container ref={drop} canDrop={canDrop}>
         {Object.keys(boxes).map(key => {
           const { left, top } = boxes[key]
           return (
             <DraggableBox key={key} id={key} left={left} top={top}>
-              <Chatbox />
+              <Chatbox isDragging={false} />
             </DraggableBox>
           )
         })}
       </Container>
+      <DragLayer />
     </>
   )
 }

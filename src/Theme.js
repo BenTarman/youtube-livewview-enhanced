@@ -3,17 +3,20 @@ import { ThemeProvider } from 'styled-components'
 import PropTypes from 'prop-types'
 
 const theme = {
-  colors: {
-    powderWhite: '#FFFDF9',
-    persianGreen: '#06B49A',
-    lightBlue: '#AFDBD2',
-    onyx: '#36313D'
-  },
-  fonts: ['sans-serif', 'Roboto'],
-  fontSizes: {
-    small: '1em',
-    medium: '2em',
-    large: '3em'
+  fullscreen: {
+    opacity: '0.3',
+    overlayColor: '#e2e2e2',
+    chatMessage: {
+      fontSize: '16px',
+      containerColor: '#abd6ce',
+      opacity: 0.5,
+      padding: '5px 10px',
+      borderRadius: '5px',
+      authorName: {
+        fontWeight: 800,
+        color: 'blue'
+      }
+    }
   }
 }
 

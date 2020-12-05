@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useDragLayer } from 'react-dnd'
 import Chatbox from '../Chatbox/Chatbox'
+import usePerformantDrag from '../../hooks/performantDrag'
 
 const Container = styled.div`
   position: fixed;
@@ -14,13 +15,14 @@ const Container = styled.div`
 `
 
 // Manually use native javascript instead of styled components to set the transform.
-const getItemStyles = (initialOffset, currentOffset) => {
-  if (!initialOffset || !currentOffset) {
+const getItemStyles = dragOffsetDiff => {
+  if (!dragOffsetDiff) {
     return {
       display: 'none'
     }
   }
-  const { x, y } = currentOffset
+
+  const { x, y } = dragOffsetDiff
 
   const transform = `translate(${x}px, ${y}px)`
   return {
@@ -30,18 +32,19 @@ const getItemStyles = (initialOffset, currentOffset) => {
 }
 
 const DragLayer = () => {
-  const { itemType, isDragging, item, initialOffset, currentOffset } = useDragLayer(monitor => ({
+  const { itemType, isDragging, item } = useDragLayer(monitor => ({
     // item will be needed to get any props with item.prop for the component.
     item: monitor.getItem(),
     itemType: monitor.getItemType(),
-    initialOffset: monitor.getInitialSourceClientOffset(),
-    currentOffset: monitor.getSourceClientOffset(),
     isDragging: monitor.isDragging()
   }))
+
+  const dragOffsetDiff = usePerformantDrag(isDragging)
+
   function renderItem() {
     switch (itemType) {
       case 'chat-box':
-        return <Chatbox />
+        return <Chatbox isDragging={true} />
       default:
         return null
     }
@@ -52,7 +55,7 @@ const DragLayer = () => {
 
   return (
     <Container>
-      <div style={getItemStyles(initialOffset, currentOffset)}>{renderItem()}</div>
+      <div style={getItemStyles(dragOffsetDiff)}>{renderItem()}</div>
     </Container>
   )
 }

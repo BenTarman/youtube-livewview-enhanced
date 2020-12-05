@@ -1,20 +1,15 @@
 import React from 'react'
-import { ThemeProvider } from 'styled-components'
-import { DndProvider, useDrop } from 'react-dnd'
+import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import FullscreenLiveViewChat from './components/FullscreenLiveviewChat/FullscreenLiveviewChat'
+import Theme from './Theme'
 
-const theme = {
-  fullscreen: {
-    opacity: '0.5'
-  }
-}
 const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
-      <ThemeProvider theme={theme}>
+      <Theme>
         <FullscreenLiveViewChat />
-      </ThemeProvider>
+      </Theme>
     </DndProvider>
   )
 }
