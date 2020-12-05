@@ -3,13 +3,12 @@ import styled from 'styled-components'
 import ChatList from '../ChatList/ChatList'
 
 const Box = styled.div`
-  height: 200px;
-  width: 200px;
+  display: inline-block;
   background-color: green;
+  padding: 20px;
 `
 
 const Chatbox = () => {
-  debugger
   return (
     <Box>
       <ChatList />

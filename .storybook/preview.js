@@ -1,13 +1,22 @@
 import { addDecorator } from '@storybook/react'
 import { ThemeProvider } from 'styled-components'
 
+import store from '../src/store'
+
 const theme = {
   fullscreen: {
     opacity: '0.3',
-    overlayColor: {
-      r: 0,
-      g: 204,
-      b: 204
+    overlayColor: '#e2e2e2',
+    chatMessage: {
+      fontSize: '16px',
+      containerColor: '#abd6ce',
+      opacity: 0.5,
+      padding: '5px 10px',
+      borderRadius: '5px',
+      authorName: {
+        fontWeight: 800,
+        color: 'blue'
+      }
     }
   }
 }

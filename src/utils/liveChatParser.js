@@ -2,8 +2,6 @@ import store from '../store'
 import { addLiveChat } from '../reducers/livechat'
 
 const parseLivechatAndCommitToStore = livechatNode => {
-  console.log('add to redux store here')
-
   // Author avatar image node
   const authorPhotoNode = livechatNode.querySelector('#author-photo img')
 
@@ -23,6 +21,8 @@ const parseLivechatAndCommitToStore = livechatNode => {
     chatBadge,
     chatMessage
   }
+
+  console.log('livechatobject', liveChatObject)
 
   // Append the livechat to our redux store.
   store.dispatch(addLiveChat(liveChatObject))

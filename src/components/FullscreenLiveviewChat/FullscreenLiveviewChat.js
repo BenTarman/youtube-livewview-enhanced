@@ -28,6 +28,10 @@ const Container = styled.div`
   with youtube player with no problems */
   pointer-events: ${props => (props.canDrop ? 'auto' : 'none')};
 `
+const ResizableBox = styled.div`
+  resize: both;
+  overflow: auto;
+`
 
 // NEED TO USE DROP TARGET NESTING HERE ....
 const FullscreenLiveViewChat = () => {

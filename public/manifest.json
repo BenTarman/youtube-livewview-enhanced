@@ -4,10 +4,6 @@
   "version": "1.0.0",
   "manifest_version": 2,
   "description": "Lets you annotate web pages and persists those annotations across page visits.",
-  "background": {
-    "scripts": ["./background.js"],
-    "persistent": true
-  },
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],

@@ -38,9 +38,7 @@ const OverlayContainer = styled.div`
         `}
 
   background-color: rgba(
-    ${props => (props.isOverCurrent ? props.theme.fullscreen.overlayColor.r : 200)},
-    ${props => props.theme.fullscreen.overlayColor.g},
-    ${props => (props.isSidePanel ? props.theme.fullscreen.overlayColor.b : 0)},
+    ${props => props.theme.fullscreen.overlayColor},
     ${props => props.theme.fullscreen.opacity}
   );
 `
@@ -66,7 +64,6 @@ const DropOverlay = ({ position, isSidePanel, children }) => {
     }
   })
 
-  console.log(isOver)
   return (
     <OverlayContainer position={position} isSidePanel={isSidePanel} isOverCurrent={isOverCurrent}>
       {hasDropped && 'lol'}

@@ -7,8 +7,6 @@ const initialState = {
 }
 
 const livechatReducer = (state = initialState, action) => {
-  console.log('omg think this will work')
-  console.log(state)
   switch (action.type) {
     case actionTypes.ADD:
       return {

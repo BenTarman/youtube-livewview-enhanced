@@ -18,8 +18,8 @@ const ChatList = () => {
   return (
     <ChatWrapper>
       <div>
-        {livechat.chatMessages.map(({ chatMessage }) => (
-          <div>{chatMessage}</div>
+        {livechat.chatMessages.map(({ chatMessage, authorPhotoNode, authorName }) => (
+          <ChatMessage author={authorName} avatarSrc={authorPhotoNode.src} chatMessage={chatMessage} />
         ))}
       </div>
     </ChatWrapper>

@@ -23,6 +23,7 @@
     "no-debugger": "warn",
     "no-use-before-define": "off",
     "object-curly-newline": "off",
-    "no-loop-func": "off"
+    "no-loop-func": "off",
+    "react/jsx-one-expression-per-line": "off"
   }
 }

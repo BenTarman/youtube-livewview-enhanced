@@ -9,7 +9,6 @@ const insertionPoint = document.createElement('div')
 insertionPoint.id = 'insertion-point'
 document.body.appendChild(insertionPoint)
 
-console.log('testing dah redux')
 listenToLiveChat()
 
 ReactDOM.render(

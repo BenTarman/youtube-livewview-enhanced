@@ -13,6 +13,8 @@ const listenToLiveChat = () => {
         for (let j = 0; j < mutations[i].addedNodes.length; ++j) {
           const addednode = mutations[i].addedNodes[j]
 
+          if (!addednode || !addednode.classList) return
+
           const liveChatNodeAdded = addednode.classList.contains('yt-live-chat-item-list-renderer')
 
           const superChatAdded = addednode.classList.contains('yt-live-chat-ticker-paid-message-item-renderer')
