@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react'
 import { DndProvider, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import { Resizable, ResizableBox } from 'react-resizable'
+import 'react-resizable/css/styles.css'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import DragLayer from '../DragLayer/DragLayer'
@@ -8,6 +10,8 @@ import ChatList from '../ChatList/ChatList'
 import DraggableBox from '../DraggableBox/DraggableBox'
 import DropOverlay from '../DropOverlay/DropOverlay'
 import Chatbox from '../Chatbox/Chatbox'
+// ES6
+
 import {
   TOP_RIGHT_DROP_SOURCE,
   TOP_LEFT_DROP_SOURCE,
@@ -29,16 +33,20 @@ const Container = styled.div`
   pointer-events: ${props => (props.canDrop ? 'auto' : 'none')};
 `
 
-const ResizableBox = styled.div`
-  height: 200px;
-  width: 200px;
+const ResizableContainer = styled.div`
+  position: absolute;
+
+  transform: translate3d(${props => props.left}px, ${props => props.top}px, 0);
+
+  // Parent nodes for the app will toggle this so make sure to manually set this on anything draggable to auto.
+  pointer-events: auto;
 `
 
 // NEED TO USE DROP TARGET NESTING HERE ....
 const FullscreenLiveViewChat = () => {
   const [boxes, setBoxes] = useState({
-    a: { top: 500, left: 500, title: 'Drag me around' },
-    b: { top: 180, left: 20, title: 'Drag me too' }
+    a: { top: 500, left: 500, height: 200, width: 200, isResizing: true }
+    // b: { top: 180, left: 20, height: 200, width: 200, isResizing: false }
   })
 
   const [{ isOver, canDrop }, drop] = useDrop({
@@ -61,7 +69,14 @@ const FullscreenLiveViewChat = () => {
   const moveBox = (id, left, top) => {
     setBoxes({
       ...boxes,
-      [id]: { left, top }
+      [id]: { ...boxes[[id]], left, top }
+    })
+  }
+
+  const setSizeBox = (id, width, height, left, top) => {
+    setBoxes({
+      ...boxes,
+      [id]: { ...boxes[[id]], width, height, left, top, isResizing: true }
     })
   }
 
@@ -69,11 +84,50 @@ const FullscreenLiveViewChat = () => {
     <>
       <Container ref={drop} canDrop={canDrop}>
         {Object.keys(boxes).map(key => {
-          const { left, top } = boxes[key]
+          const { left, top, isResizing, width, height } = boxes[key]
+
           return (
-            <DraggableBox key={key} id={key} left={left} top={top}>
-              <Chatbox isDragging={false} />
-            </DraggableBox>
+            <div>
+              {isResizing ? (
+                <Resizable
+                  width={width}
+                  height={height}
+                  onResize={(e, data) => {
+                    let newLeft = left
+                    let newTop = top
+                    const deltaHeight = data.size.height - height
+                    const deltaWidth = data.size.width - width
+
+                    // For better user experience allows resizing from any angle to "feel" right.
+                    // Note: If performance is an issue ever removing this feature should improve.
+                    if (data.handle[0] === 'n') {
+                      newTop -= deltaHeight
+                    }
+                    if (data.handle[data.handle.length - 1] === 'w') {
+                      newLeft -= deltaWidth
+                    }
+
+                    setSizeBox(key, data.size.width, data.size.height, newLeft, newTop)
+                  }}
+                  resizeHandles={['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']}
+                >
+                  <ResizableContainer left={left} top={top}>
+                    <Chatbox
+                      isResizing={isResizing}
+                      isDragging={false}
+                      width={width}
+                      height={height}
+                      left={left}
+                      top={top}
+                    />
+                  </ResizableContainer>
+                </Resizable>
+              ) : (
+                <DraggableBox key={key} id={key} left={left} top={top}>
+                  <Chatbox className="lolol" isDragging={false} width={width} height={height} />
+                </DraggableBox>
+              )}
+            </div>
           )
         })}
       </Container>

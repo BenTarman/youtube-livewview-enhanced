@@ -4,16 +4,25 @@ import PropTypes from 'prop-types'
 import ChatList from '../ChatList/ChatList'
 
 const Box = styled.div`
-  display: block;
   background-color: blue;
   padding: 20px;
 
-  height: 500px;
-  width: 500px;
+  height: ${props => props.height}px;
+  width: ${props => props.width}px;
+
+  margin: ${props => props.top} 0 0 ${props => props.left};
 `
 
-const Chatbox = ({ isDragging }) => {
-  return <Box>{!isDragging ? <ChatList /> : <div>You are Dragging</div>}</Box>
+// eslint-disable-next-line react/prop-types
+const Chatbox = ({ isDragging, width, height, isResizing, left, top }) => {
+  return (
+    <Box height={height} width={width} left={left} top={top}>
+      <div> lolol</div>
+      {/*   {!isDragging && !isResizing ? <ChatList /> : <div>You are Dragging</div>}
+
+      */}
+    </Box>
+  )
 }
 
 Chatbox.propTypes = {
