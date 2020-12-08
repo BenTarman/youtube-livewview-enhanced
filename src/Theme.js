@@ -14,7 +14,7 @@ const theme = {
       borderRadius: '5px',
       authorName: {
         fontWeight: 800,
-        color: 'blue'
+        color: 'lightgrey'
       }
     }
   }

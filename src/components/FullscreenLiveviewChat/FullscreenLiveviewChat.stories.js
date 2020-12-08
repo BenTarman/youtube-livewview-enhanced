@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import configureStore from 'redux-mock-store'
 
+// eslint-disable-next-line import/no-named-as-default-member
 import FullscreenLiveviewChat from './FullscreenLiveviewChat'
 
 const mockStore = configureStore()

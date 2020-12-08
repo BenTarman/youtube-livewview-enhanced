@@ -2,14 +2,15 @@ import React, { useState, useCallback } from 'react'
 import { DndProvider, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { Resizable, ResizableBox } from 'react-resizable'
-import 'react-resizable/css/styles.css'
+import '../../App.css'
 import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import DragLayer from '../DragLayer/DragLayer'
 import ChatList from '../ChatList/ChatList'
-import DraggableBox from '../DraggableBox/DraggableBox'
+import ResizableDraggableBox from '../ResizableDraggableBox/ResizableDraggableBox'
 import DropOverlay from '../DropOverlay/DropOverlay'
 import Chatbox from '../Chatbox/Chatbox'
+import { moveBox, setSizeBox, setIsDraggingBox, setIsResizingBox } from '../../reducers/draggableAndResizableBox'
 // ES6
 
 import {
@@ -44,10 +45,8 @@ const ResizableContainer = styled.div`
 
 // NEED TO USE DROP TARGET NESTING HERE ....
 const FullscreenLiveViewChat = () => {
-  const [boxes, setBoxes] = useState({
-    a: { top: 500, left: 500, height: 200, width: 200, isResizing: true }
-    // b: { top: 180, left: 20, height: 200, width: 200, isResizing: false }
-  })
+  const boxes = useSelector(state => state.draggableAndResizableBox)
+  const dispatch = useDispatch()
 
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: 'chat-box',
@@ -55,7 +54,7 @@ const FullscreenLiveViewChat = () => {
       const delta = monitor.getDifferenceFromInitialOffset()
       const left = Math.round(item.left + delta.x)
       const top = Math.round(item.top + delta.y)
-      moveBox(item.id, left, top)
+      dispatch(moveBox(item.id, left, top))
       return undefined
     },
 
@@ -66,68 +65,42 @@ const FullscreenLiveViewChat = () => {
     })
   })
 
-  const moveBox = (id, left, top) => {
-    setBoxes({
-      ...boxes,
-      [id]: { ...boxes[[id]], left, top }
-    })
-  }
-
-  const setSizeBox = (id, width, height, left, top) => {
-    setBoxes({
-      ...boxes,
-      [id]: { ...boxes[[id]], width, height, left, top, isResizing: true }
-    })
-  }
-
   return (
     <>
       <Container ref={drop} canDrop={canDrop}>
         {Object.keys(boxes).map(key => {
-          const { left, top, isResizing, width, height } = boxes[key]
+          const { left, top, isResizing, width, height, isDragging } = boxes[key]
 
           return (
-            <div>
-              {isResizing ? (
-                <Resizable
-                  width={width}
-                  height={height}
-                  onResize={(e, data) => {
-                    let newLeft = left
-                    let newTop = top
-                    const deltaHeight = data.size.height - height
-                    const deltaWidth = data.size.width - width
+            <ResizableDraggableBox
+              key={key}
+              id={key}
+              left={left}
+              top={top}
+              width={width}
+              height={height}
+              onResize={(e, data) => {
+                let newLeft = left
+                let newTop = top
+                const deltaHeight = data.size.height - height
+                const deltaWidth = data.size.width - width
 
-                    // For better user experience allows resizing from any angle to "feel" right.
-                    // Note: If performance is an issue ever removing this feature should improve.
-                    if (data.handle[0] === 'n') {
-                      newTop -= deltaHeight
-                    }
-                    if (data.handle[data.handle.length - 1] === 'w') {
-                      newLeft -= deltaWidth
-                    }
+                // For better user experience allows resizing from any angle to "feel" right.
+                // Note: If performance is an issue ever removing this feature should improve.
+                if (data.handle[0] === 'n') {
+                  newTop -= deltaHeight
+                }
+                if (data.handle[data.handle.length - 1] === 'w') {
+                  newLeft -= deltaWidth
+                }
 
-                    setSizeBox(key, data.size.width, data.size.height, newLeft, newTop)
-                  }}
-                  resizeHandles={['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']}
-                >
-                  <ResizableContainer left={left} top={top}>
-                    <Chatbox
-                      isResizing={isResizing}
-                      isDragging={false}
-                      width={width}
-                      height={height}
-                      left={left}
-                      top={top}
-                    />
-                  </ResizableContainer>
-                </Resizable>
-              ) : (
-                <DraggableBox key={key} id={key} left={left} top={top}>
-                  <Chatbox className="lolol" isDragging={false} width={width} height={height} />
-                </DraggableBox>
-              )}
-            </div>
+                dispatch(setSizeBox(key, data.size.width, data.size.height, newLeft, newTop))
+              }}
+              onResizeStart={() => dispatch(setIsResizingBox(key, true))}
+              onResizeStop={() => dispatch(setIsResizingBox(key, false))}
+            >
+              <Chatbox isDragging={false} isResizing={isResizing} width={width} height={height} left={left} top={top} />
+            </ResizableDraggableBox>
           )
         })}
       </Container>

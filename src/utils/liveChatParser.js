@@ -22,8 +22,6 @@ const parseLivechatAndCommitToStore = livechatNode => {
     chatMessage
   }
 
-  console.log('livechatobject', liveChatObject)
-
   // Append the livechat to our redux store.
   store.dispatch(addLiveChat(liveChatObject))
 }

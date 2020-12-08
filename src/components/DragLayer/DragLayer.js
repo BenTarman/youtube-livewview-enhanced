@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
 import { useDragLayer } from 'react-dnd'
 import Chatbox from '../Chatbox/Chatbox'
 import usePerformantDrag from '../../hooks/performantDrag'
@@ -39,12 +40,14 @@ const DragLayer = () => {
     isDragging: monitor.isDragging()
   }))
 
+  const boxes = useSelector(state => state.draggableAndResizableBox)
   const dragOffsetDiff = usePerformantDrag(isDragging)
 
   function renderItem() {
     switch (itemType) {
       case 'chat-box':
-        return <Chatbox isDragging={true} />
+        const { width, height, left, top } = boxes[item.id]
+        return <Chatbox isDragging={true} width={width} height={height} left={left} top={top} />
       default:
         return null
     }

@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDrag } from 'react-dnd'
+import { Resizable, ResizableBox } from 'react-resizable'
 import styled from 'styled-components'
 import { getEmptyImage } from 'react-dnd-html5-backend'
 import PropTypes from 'prop-types'
@@ -16,13 +17,17 @@ const Container = styled.div`
   pointer-events: auto;
 `
 
-const DraggableBox = ({ id, left, top, children }) => {
+// eslint-disable-next-line react/prop-types
+const ResizableDraggableBox = ({ id, left, top, children, width, height, onResize, onResizeStart, onResizeStop }) => {
   const [{ isDragging }, drag, preview] = useDrag({
     item: { id, left, top, type: 'chat-box' },
     collect: monitor => ({
       isDragging: monitor.isDragging()
     })
   })
+
+  // Will locally keep track if resizing is in progress, if so we will set the drag ref
+  const [isResizing, setIsResizing] = useState(false)
 
   useEffect(() => {
     preview(getEmptyImage(), { captureDraggingState: true })
@@ -32,17 +37,26 @@ const DraggableBox = ({ id, left, top, children }) => {
   const transform = `translate3d(${left}px, ${top}px, 0)`
 
   return (
-    <Container ref={drag} transform={transform} isDragging={isDragging}>
-      {children}
-    </Container>
+    <Resizable
+      width={width}
+      height={height}
+      onResize={(e, data) => onResize(e, data)}
+      resizeHandles={['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']}
+      onResizeStart={() => setIsResizing(true) || onResizeStart()}
+      onResizeStop={() => setIsResizing(false) || onResizeStop()}
+    >
+      <Container ref={isResizing ? null : drag} transform={transform} isDragging={isDragging}>
+        {children}
+      </Container>
+    </Resizable>
   )
 }
 
-DraggableBox.propTypes = {
+ResizableDraggableBox.propTypes = {
   id: PropTypes.string.isRequired,
   left: PropTypes.number.isRequired,
   top: PropTypes.number.isRequired,
   children: PropTypes.node.isRequired
 }
 
-export default DraggableBox
+export default ResizableDraggableBox
