@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDrag } from 'react-dnd'
-import { Resizable, ResizableBox } from 'react-resizable'
+import { Resizable } from 'react-resizable'
 import styled from 'styled-components'
 import { getEmptyImage } from 'react-dnd-html5-backend'
 import PropTypes from 'prop-types'

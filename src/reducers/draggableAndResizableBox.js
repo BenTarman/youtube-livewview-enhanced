@@ -6,7 +6,6 @@ const actionTypes = {
   ADD_BOX: 'ADD_BOX',
   MOVE_BOX: 'MOVE_BOX',
   RESIZE_BOX: 'RESIZE_BOX',
-  SET_IS_DRAGGING: 'SET_IS_DRAGGING',
   SET_IS_RESIZING: 'SET_IS_RESIZING'
 }
 
@@ -36,25 +35,14 @@ const draggableAndResizableBoxReducer = (state = initialState, action) => {
         }
       }
 
-    case actionTypes.SET_IS_DRAGGING:
-      return {
-        ...state,
-        [action.payload.id]: {
-          ...state[[action.payload.id]],
-          isDragging: action.payload.isDragging
-        }
-      }
     case actionTypes.SET_IS_RESIZING:
-      console.log(state, action.payload.id)
-      const ret = {
+      return {
         ...state,
         [action.payload.id]: {
           ...state[[action.payload.id]],
           isResizing: action.payload.isResizing
         }
       }
-      console.log(ret)
-      return ret
 
     default:
       return state
@@ -67,10 +55,6 @@ export const moveBox = (id, left, top) => {
 
 export const setSizeBox = (id, width, height, left, top) => {
   return { type: actionTypes.RESIZE_BOX, payload: { id, left, top, width, height } }
-}
-
-export const setIsDraggingBox = (id, isDragging) => {
-  return { type: actionTypes.SET_IS_DRAGGING, payload: { id, isDragging } }
 }
 
 export const setIsResizingBox = (id, isResizing) => {

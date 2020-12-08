@@ -1,16 +1,15 @@
-import React, { useState, useCallback } from 'react'
-import { DndProvider, useDrop } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import { Resizable, ResizableBox } from 'react-resizable'
+import React from 'react'
+import { useDrop } from 'react-dnd'
+
 import '../../App.css'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import DragLayer from '../DragLayer/DragLayer'
-import ChatList from '../ChatList/ChatList'
+
 import ResizableDraggableBox from '../ResizableDraggableBox/ResizableDraggableBox'
-import DropOverlay from '../DropOverlay/DropOverlay'
+
 import Chatbox from '../Chatbox/Chatbox'
-import { moveBox, setSizeBox, setIsDraggingBox, setIsResizingBox } from '../../reducers/draggableAndResizableBox'
+import { moveBox, setSizeBox, setIsResizingBox } from '../../reducers/draggableAndResizableBox'
 // ES6
 
 import {
@@ -32,15 +31,6 @@ const Container = styled.div`
   make sure pointer events enabled Otherwise, disable pointer events so user can interact 
   with youtube player with no problems */
   pointer-events: ${props => (props.canDrop ? 'auto' : 'none')};
-`
-
-const ResizableContainer = styled.div`
-  position: absolute;
-
-  transform: translate3d(${props => props.left}px, ${props => props.top}px, 0);
-
-  // Parent nodes for the app will toggle this so make sure to manually set this on anything draggable to auto.
-  pointer-events: auto;
 `
 
 // NEED TO USE DROP TARGET NESTING HERE ....
@@ -69,7 +59,7 @@ const FullscreenLiveViewChat = () => {
     <>
       <Container ref={drop} canDrop={canDrop}>
         {Object.keys(boxes).map(key => {
-          const { left, top, isResizing, width, height, isDragging } = boxes[key]
+          const { left, top, isResizing, width, height } = boxes[key]
 
           return (
             <ResizableDraggableBox

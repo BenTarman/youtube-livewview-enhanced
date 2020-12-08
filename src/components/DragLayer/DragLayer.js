@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useDragLayer } from 'react-dnd'
 import Chatbox from '../Chatbox/Chatbox'
 import usePerformantDrag from '../../hooks/performantDrag'
