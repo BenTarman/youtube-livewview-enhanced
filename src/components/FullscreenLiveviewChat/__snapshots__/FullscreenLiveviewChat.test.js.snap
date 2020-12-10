@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`My Connected React-Redux Component Should render and have correct styling and layout from last snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-fubCfw dqMxbi"
+  >
+    <div
+      class="sc-iBPRYJ dlAidR react-resizable"
+      transform="translate3d(500px, 500px, 0)"
+    >
+      asdfasfd
+      <div
+        class="sc-jSgupP cjTDZD"
+        height="200"
+        width="200"
+      >
+        <div>
+          You are Dragging
+        </div>
+      </div>
+      <span
+        class="react-resizable-handle react-resizable-handle-sw"
+      />
+      <span
+        class="react-resizable-handle react-resizable-handle-se"
+      />
+      <span
+        class="react-resizable-handle react-resizable-handle-nw"
+      />
+      <span
+        class="react-resizable-handle react-resizable-handle-ne"
+      />
+      <span
+        class="react-resizable-handle react-resizable-handle-w"
+      />
+      <span
+        class="react-resizable-handle react-resizable-handle-e"
+      />
+      <span
+        class="react-resizable-handle react-resizable-handle-n"
+      />
+      <span
+        class="react-resizable-handle react-resizable-handle-s"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -89,6 +89,7 @@ const FullscreenLiveViewChat = () => {
               onResizeStart={() => dispatch(setIsResizingBox(key, true))}
               onResizeStop={() => dispatch(setIsResizingBox(key, false))}
             >
+              asdfasfd
               <Chatbox isDragging={false} isResizing={isResizing} width={width} height={height} left={left} top={top} />
             </ResizableDraggableBox>
           )
