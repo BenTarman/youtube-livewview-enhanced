@@ -6,6 +6,7 @@ const theme = {
   fullscreen: {
     opacity: '0.3',
     overlayColor: '#e2e2e2',
+    chatMessageSpacing: '10px',
     chatMessage: {
       fontSize: '16px',
       containerColor: '#abd6ce',

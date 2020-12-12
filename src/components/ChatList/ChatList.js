@@ -13,15 +13,26 @@ const ChatList = () => {
     flex-direction: column-reverse;
   `
 
+  const ChatContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    // Spacing between chat messages set here.
+    div:not(:last-child) {
+      margin-bottom: ${props => props.theme.fullscreen.chatMessageSpacing};
+    }
+  `
+
   // Note: wrapping content in a ChatWrapper AND  an extra div to get the css for ChatWrapper to work.
   // This basically is a performant way to ensure the bottom of the chat list is always shown when its updated.
   return (
     <ChatWrapper>
-      <div>
+      <ChatContainer>
         {livechat.chatMessages.map(({ chatMessage, authorPhotoNode, authorName }) => (
           <ChatMessage author={authorName} avatarSrc={authorPhotoNode.src} chatMessage={chatMessage} />
         ))}
-      </div>
+      </ChatContainer>
     </ChatWrapper>
   )
 }
