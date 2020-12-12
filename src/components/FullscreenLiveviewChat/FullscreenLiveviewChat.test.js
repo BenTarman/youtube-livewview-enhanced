@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 import React from 'react'
 import { wrapInTestContext } from 'react-dnd-test-utils'
-import { cleanup, render } from '@testing-library/react'
+import { act, cleanup, render } from '@testing-library/react'
 import HTML5Backend from 'react-dnd-html5-backend'
 import ReactTestUtils from 'react-dom/test-utils'
 import { shallow, mount } from 'enzyme'
@@ -14,6 +14,7 @@ import renderer from 'react-test-renderer'
 import configureStore from 'redux-mock-store'
 import FullscreenLiveviewchat from './FullscreenLiveviewChat'
 import Chatbox from '../Chatbox/Chatbox'
+import ResizableDraggableBox from '../ResizableDraggableBox/ResizableDraggableBox'
 
 const mockStore = configureStore()
 
@@ -34,7 +35,7 @@ describe('My Connected React-Redux Component', () => {
   beforeEach(() => {
     store = mockStore({
       draggableAndResizableBox: {
-        a: { top: 500, left: 500, height: 200, width: 200, isResizing: true }
+        a: { top: 500, left: 500, height: 200, width: 200, isResizing: true, isDragging: true }
       },
 
       livechat: {
@@ -65,24 +66,47 @@ describe('My Connected React-Redux Component', () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  /*
-  it('Should render and have correct styling and layout from last snapshot', () => {
+  it('Should have React dnd library should be detecting drag sources and properly updating monitored state', () => {
     const FullscreenLiveviewchatContext = wrapInTestContext(FullscreenLiveviewchat)
 
-    const componentInstance = ReactTestUtils.renderIntoDocument(
-      <Provider store={store}>
-        <FullscreenLiveviewchatContext />
-      </Provider>
+    // Since the code base uses functional components, we create a ref so we can access component instance
+    const ref = React.createRef()
+
+    // NOTE: due to bug in enzyme need to wrap component in a fragment.
+    mount(
+      <>
+        <Provider store={store}>
+          <FullscreenLiveviewchatContext ref={ref} />
+        </Provider>
+      </>
     )
 
+    // Get backend we are testing.
+    const backend = ref.current.getManager().getBackend()
 
-    // const backend = root.getManager().getBackend()
+    // Get all the drag sources ids.
+    const draggableObjectSources = Array.from(ref.current.getManager().getRegistry().dragSources.keys())
 
+    // Get the monitor to watch for drag/drop state
+    const monitor = ref.current.getManager().getMonitor()
 
-    const piece = ReactTestUtils.findRenderedComponentWithType(root, Piece)
-    backend.simulateBeginDrag([piece.getHandlerId()])
-    expect(piece.render().props.isDragging).toBeTruthy()
+    // Expect default to not be dragging.
+    expect(monitor.isDragging()).toBe(false)
 
+    // Start dragging all the draggable sources.
+    act(() => {
+      backend.simulateBeginDrag(draggableObjectSources)
+    })
+
+    // Expect us dragging state to be monitored
+    expect(monitor.isDragging()).toBe(true)
+
+    // Stop dragging sources.
+    act(() => {
+      backend.simulateEndDrag(draggableObjectSources)
+    })
+
+    // Expect us dragging state to be monitored
+    expect(monitor.isDragging()).toBe(false)
   })
-      */
 })
