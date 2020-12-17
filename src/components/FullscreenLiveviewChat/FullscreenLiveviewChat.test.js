@@ -2,19 +2,14 @@
 /* eslint-disable no-undef */
 import React from 'react'
 import { wrapInTestContext } from 'react-dnd-test-utils'
-import { act, cleanup, render } from '@testing-library/react'
-import HTML5Backend from 'react-dnd-html5-backend'
-import ReactTestUtils from 'react-dom/test-utils'
-import { shallow, mount } from 'enzyme'
-import { DragDropContext } from 'react-dnd'
+import { act, render } from '@testing-library/react'
 
-import TestBackend from 'react-dnd-test-backend'
+import { mount } from 'enzyme'
+
 import { Provider } from 'react-redux'
-import renderer from 'react-test-renderer'
+
 import configureStore from 'redux-mock-store'
 import FullscreenLiveviewchat from './FullscreenLiveviewChat'
-import Chatbox from '../Chatbox/Chatbox'
-import ResizableDraggableBox from '../ResizableDraggableBox/ResizableDraggableBox'
 
 const mockStore = configureStore()
 
