@@ -4,13 +4,14 @@ import PropTypes from 'prop-types'
 
 const theme = {
   fullscreen: {
-    opacity: '0.3',
+    opacity: 0.2,
     overlayColor: '#e2e2e2',
     chatMessageSpacing: '10px',
+    containerColor: 'purple',
     chatMessage: {
       fontSize: '16px',
       containerColor: '#abd6ce',
-      opacity: 0.5,
+      opacity: 1.0,
       padding: '5px 10px',
       borderRadius: '5px',
       authorName: {

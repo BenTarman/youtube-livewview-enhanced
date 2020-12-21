@@ -6,7 +6,7 @@ export default {
   component: ChatMessage
 }
 
-export const FullscreenLiveviewOverlay = () => (
+export const ChatMessageItem = () => (
   <ChatMessage
     avatarSrc="https://yt3.ggpht.com/ytc/AAUvwngn_ZtDfYYF_LlERXSOsMxnvIEGHxM22iC08w=s32-c-k-c0x00ffffff-no-rj"
     authorName="Toby Lerone"

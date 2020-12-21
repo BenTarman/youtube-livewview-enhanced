@@ -11,7 +11,7 @@ import FullscreenLiveviewChat from './FullscreenLiveviewChat'
 const mockStore = configureStore()
 const store = mockStore({
   draggableAndResizableBox: {
-    a: { top: 500, left: 500, height: 200, width: 200, isResizing: true }
+    a: { top: 500, left: 500, height: 400, width: 400, isResizing: false }
   },
 
   livechat: {

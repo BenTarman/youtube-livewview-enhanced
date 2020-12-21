@@ -8,6 +8,7 @@ const localTheme = props => props.theme.fullscreen.chatMessage
 
 const Container = styled.div`
   display: inline-block;
+
   background-color: ${props => rgba(localTheme(props).containerColor, localTheme(props).opacity)};
   padding: ${props => localTheme(props).padding};
   border-radius: ${props => localTheme(props).borderRadius};
@@ -23,7 +24,7 @@ const Message = styled.div`
 const MessageWrapper = styled.div`
   display: flex;
   align-items: center;
-
+  opacity: ${props => localTheme(props).opacity};
   * {
     margin-right: 1.25px;
   }

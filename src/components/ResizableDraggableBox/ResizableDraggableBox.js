@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDrag } from 'react-dnd'
 import { Resizable } from 'react-resizable'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { getEmptyImage } from 'react-dnd-html5-backend'
 import PropTypes from 'prop-types'
 
@@ -15,6 +15,19 @@ const Container = styled.div`
 
   // Parent nodes for the app will toggle this so make sure to manually set this on anything draggable to auto.
   pointer-events: auto;
+
+  // Hide react resizable handles by default, will show on hover.
+  .react-resizable-handle {
+    display: none;
+  }
+
+  &:hover {
+    opacity: 0.8;
+    cursor: move;
+    .react-resizable-handle {
+      display: inherit;
+    }
+  }
 `
 
 // eslint-disable-next-line react/prop-types
